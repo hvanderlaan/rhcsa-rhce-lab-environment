@@ -10,6 +10,9 @@ if you want to use this study environment you need to install some packages in o
 - ansible >= 2.2.1.0
 ```
 
+## Build time
+time to build the environmet is on a MacBook Air
+
 ## Usage
 ```bash
 $ vagrant up
@@ -52,8 +55,10 @@ $ ssh 172.16.20.20 -l root
 * bash scripting
 
 ## Todo
-- [ ] create custom hosts files for system1 and system2
-- [ ] add RHCSA Objectives
+- [ ] Create custom hosts files for system1 and system2
+- [ ] Make ansible playbooks idempotent
+- [ ] Add 2 extra interfaces for link aggregation (RHCE7)
+- [ ] Add RHCSA Objectives
 
 ## Legal notice
 If you are searching for answers or spoilers to the EX300K / RHCE7 exam, this is not the place to search. This is only a tool to study. Also you should study for this exam, you will never learn it when you only learn the answers.
