@@ -1,0 +1,97 @@
+---
+# file     : roles/common/tasks/main.yml
+# purpose  : provisioning for all servers
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+- name: install provision requirements
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - NetworkManager-glib
+    - libnm-gtk-devel
+    - nm-connection-editor
+    - libselinux-python
+    - policycoreutils-python
+    - bash-completion
+
+- name: creating local facts
+  template:
+    src: etc/ansible/facts.d/info.fact
+    dest: /etc/ansible/facts.d/info.fact
+
+- name: update private ipv4 address in /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "127.0.0.1\t{{ ansible_fqdn }}"
+    backrefs: yes
+    line: "{{ private_ipv4_address }}\t{{ ansible_fqdn }}\t{{ ansible_hostname }}"
+
+- name: add private ipv6 address in /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ private_ipv6_address }}\t{{ ansible_fqdn }}\t{{ ansible_hostname }}"
+
+- name: check exists /etc/sysconfig/network-scripts/ifcfg-eth1
+  stat:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth1
+  register: ifcfg_eth1_stat
+
+- name: remove private connection Wired connection 1
+  nmcli:
+    type: ethernet
+    conn_name: "Wired connection 1"
+    state: absent
+  when: ifcfg_eth1_stat.stat.exists == false
+
+- name: create private connection System eth1
+  nmcli:
+    type: ethernet
+    conn_name: "System eth1"
+    ifname: eth1
+    ip4: "{{ private_ipv4_address }}/24"
+    ip6: "{{ private_ipv6_address }}"
+    dns4:
+      - "{{ ipa_ipv4 }}"
+      - "{{ ansible_dns.nameservers[0] }}"
+      - "{{ google_dns4 }}"
+    dns6:
+      - "{{ ipa_ipv6 }}"
+    state: present
+  when: ifcfg_eth1_stat.stat.exists == false
+  ignore_errors: true
+
+- name: allow ssh login with password
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication no"
+    replace: "PasswordAuthentication yes"
+  notify: restart sshd
+
+- name: add user account and set password
+  user:
+    name: "{{ default_user_name }}"
+    groups: wheel
+    password: "{{ default_user_password }}"
+    state: present
+
+- name: update password for user root
+  user:
+    name: root
+    password: "{{ default_root_password }}"
+
+- name: installing epel for extra packages
+  yum:
+    name: epel-release
+    state: present
+
+- name: create /etc/openldap/cacerts directory
+  file:
+    path: /etc/openldap/cacerts
+    state: directory

@@ -1,0 +1,54 @@
+---
+# file     : roles/labipa-users/tasks/main.yml
+# purpose  : provisioning of ldap users for labipa server
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+- name: installing vsftpd
+  yum:
+    name: vsftpd
+    state: present
+
+- name: open firewall ports for vsftpd
+  firewalld:
+    service: ftp
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: staring and enableing vsftpd
+  service:
+    name: vsftpd
+    enabled: true
+    state: started
+
+- name: verify cacert.p12 exists
+  stat:
+    path: /var/ftp/pub/cacert.p13
+  register: cacert_stat
+
+- name: copy freeipa cacert to /var/ftp/pub
+  shell: "cp /root/cacert.p12 /var/ftp/pub"
+  when: cacert_stat.stat.exists == false
+
+- name: obtain tgt for admin user
+  shell: "echo {{ ipa_admin_password }} | kinit admin"
+
+- name: change freeipa user defaults
+  shell: "ipa config-mod --homedirectory /home/ldap --defaultshell /bin/bash --maxusername 32"
+
+- name: "adding user to freeipa"
+  shell: "echo $'{{ ipa_admin_password }}\n{{ ipa_admin_password }}' | ipa user-add {{ item.user }} --first {{ item.first }} --last {{ item.last }} --password; sleep 1;echo $'{{ ipa_admin_password }}\n{{ ipa_admin_password }}\n{{ ipa_admin_password }}'| kinit {{ item.user }};echo $'{{ ipa_admin_password }}'| kinit admin"
+  with_items: "{{ labipa_users }}"
+  register: output
+  failed_when: output.changed == false
+
+- name: create home directory
+  file:
+    path: /home/ldap
+    state: directory

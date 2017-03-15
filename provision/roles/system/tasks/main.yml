@@ -1,0 +1,29 @@
+---
+# file     : roles/system/tasks/main.yml
+# purpose  : provision non common settings for system{1..2}
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+- name: setting selinux to targeted and enforcing
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: starting and enableing firewalld
+  service:
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: upate System eth0 with PEERDNS=no
+  lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+    line: "PEERDNS=no"
+  notify:
+    - reload network
+    - restart network

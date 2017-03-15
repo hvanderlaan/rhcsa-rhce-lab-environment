@@ -1,0 +1,17 @@
+---
+# file     : roles/common/defaults/main.yml
+# purpose  : variables file for provisioning common role
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+default_user_name: user
+default_user_password: $6$kEtBL42k$LViMmUZYWRCSGrbAvsiOWqJFqKc/6fp9Te/Rnq5SWRP6tgNyGW2DN7xDvuSlAmaAptAGX601KKqg0VDOrZMKW/
+default_root_password: $6$kEtBL42k$LViMmUZYWRCSGrbAvsiOWqJFqKc/6fp9Te/Rnq5SWRP6tgNyGW2DN7xDvuSlAmaAptAGX601KKqg0VDOrZMKW/
+ipa_ipv4: 172.16.20.2
+ipa_ipv6: fd00:cafe::2
+google_dns4: 8.8.8.8

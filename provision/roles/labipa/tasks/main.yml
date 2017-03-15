@@ -1,0 +1,86 @@
+---
+# file     : roles/labip/tasks/main.yml
+# purpose  : provision non common labipa specific settings
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+- name: setting selinux targeted and enforcing
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: installing freeipa packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ ipa_packages }}"
+
+- name: starting and enableing haveged
+  service:
+    name: haveged
+    enabled: true
+    state: started
+
+- name: check if freeipa is already installed
+  stat:
+    path: /root/cacert.p12
+  register: labipa_status
+
+- name: disable dnslookup for installing freeipa
+  lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+    line: 'PEERDNS=no'
+    state: present
+  when: labipa_status.stat.exists == false
+
+- name: restart NetworkManager
+  service:
+    name: NetworkManager
+    state: restarted
+  when: labipa_status.stat.exists == false
+
+- name: configure freeipa service
+  shell: "ipa-server-install \
+    --setup-dns --domain={{ domain_name }} \
+    --realm={{ ipa_realm }} --ds-password={{ ldap_directory_manager_password }} \
+    --admin-password={{ ipa_admin_password }} --forwarder={{ ansible_dns.nameservers[0] }} \
+    --unattended"
+  when: labipa_status.stat.exists == false
+
+- name: enable dnslookup after installing freeipa
+  lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+    line: 'PEERDNS=no'
+    state: absent
+  when: labipa_status.stat.exists == false
+
+- name: restart NetworkManager
+  service:
+    name: NetworkManager
+    state: restarted
+  when: labipa_status.stat.exists == false
+
+- name: starting and enableing kerberos service
+  service:
+    name: krb5kdc
+    enabled: true
+    state: started
+
+- name: starting and enableing firewalld
+  service:
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: open required firewall ports
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  with_items: "{{ ipa_firewall_rules }}"

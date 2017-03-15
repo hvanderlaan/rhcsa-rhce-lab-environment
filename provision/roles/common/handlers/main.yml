@@ -1,0 +1,23 @@
+---
+# file     : roles/common/handlers/main.yml
+# purpose  : handlers for common role
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted
+
+- name: restart network
+  service:
+    name: NetworkManager
+    state: restarted
+
+- name: reload network
+  shell: "nmcli con reload"

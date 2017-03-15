@@ -1,0 +1,37 @@
+---
+# file     : roles/labipa/defaults/main.yml
+# purpose  : variables file for provisioning labipa server
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+ipa_packages:
+  - haveged
+  - ipa-server
+  - ipa-server-dns
+  - bind-dyndb-ldap
+ipa_firewall_rules:
+  - http
+  - https
+  - ldap
+  - ldaps
+  - kerberos
+  - kpasswd
+  - dns
+  - ntp
+domain_name: example.com
+ipa_hostname: labipa
+ipa_fqdn: "{{ ipa_hostname }}.{{ domain_name }}"
+ipa_ipv4: 172.16.20.2
+ipa_ipv6: fd00:cafe::2
+network_interfaces:
+  - eth0
+  - eth1
+google_dns4: 8.8.8.8
+ipa_realm: "{{ domain_name | upper }}"
+ldap_directory_manager_password: password
+ipa_admin_password: password

@@ -1,0 +1,36 @@
+---
+# file     : system.yml
+# purpose  : provision system{1..2} server for rhcsa and rhce lab
+#
+# author   : harald van der laan
+# date     : 2017/03/15
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+- hosts: all
+  become: true
+
+  pre_tasks:
+    - name: create local facts directory
+      file: path=/etc/ansible/facts.d state=directory
+      register: factdir
+
+    - name: check local fact file
+      stat: path=/etc/ansible/facts.d/info.fact
+      register: factfile
+
+    - name: create local fact file
+      file: path=/etc/ansible/facts.d/info.fact state=touch
+      when: factdir.changed or factfile.stat.exists == False
+
+  roles:
+    - { role: common, when: ansible_local.info.ansible is not defined }
+
+# only for managed servers when: ansible_local.info.ansible.managed == "true"
+- hosts: all
+  become: true
+
+  roles:
+    - { role: system, when: ansible_local.info.ansible.managed == "true" }
