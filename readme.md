@@ -10,8 +10,20 @@ if you want to use this study environment you need to install some packages in o
 - ansible >= 2.2.1.0
 ```
 
+## User information
+| user name | password | server  |
+|-----------|----------|---------|
+| user      | ratencot | labipa  |
+| root      | ratencot | labipa  |
+| user      | ratencot | system1 |
+| root      | ratencot | system1 |
+| user      | ratencot | system2 |
+| root      | ratencot | system2 |
+
 ## Build time
-time to build the environmet is on a MacBook Air
+Build time on a MacBook Air is: `vagrant up  140,16s user 47,86s system 17% cpu 17:31,12 total`
+
+This could be faster is you upgrade labipa server before you start. You could give the labipa server 2048MB of memory and 2 cpu's. The current configuration is 1024MB and 1 cpu. This should be sufficient for normal usage.
 
 ## Usage
 ```bash
