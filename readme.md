@@ -67,7 +67,7 @@ $ ssh 172.16.20.20 -l root
 * bash scripting
 
 ## Todo
-- [ ] Fix network [issues #1](https://github.com/hvanderlaan/rhcsa-rhce-lab-environment/issues/1) system1 and system2 (no
+- [x] Fix network [issues #1](https://github.com/hvanderlaan/rhcsa-rhce-lab-environment/issues/1) system1 and system2 (no
 - [ ] Create custom hosts files for system1 and system2
 - [ ] Make ansible playbooks idempotent
 - [ ] Add 2 extra interfaces for link aggregation (RHCE7)
