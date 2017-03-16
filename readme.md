@@ -133,9 +133,10 @@ $ ssh 172.16.20.20 -l root
 - [x] Fix network [issues #1](https://github.com/hvanderlaan/rhcsa-rhce-lab-environment/issues/1) system1 and system2
 - [x] Add RHCSA Objectives
 - [x] Dns resolving done by labipa server
-- [ ] Create reccords in labipa dns for system1 and system1
+- [x] Create reccords in labipa dns for system1 and system1
+- [x] Add 2 extra interfaces for link aggregation (RHCE7)
+- [ ] Rename Wire connection N to System ethN
 - [ ] Make ansible playbooks idempotent
-- [ ] Add 2 extra interfaces for link aggregation (RHCE7)
 
 ## Legal notice
 If you are searching for answers or spoilers to the EX300K / RHCE7 exam, this is not the place to search. This is only a tool to study. Also you should study for this exam, you will never learn it when you only learn the answers.
