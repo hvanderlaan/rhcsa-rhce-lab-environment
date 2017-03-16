@@ -4,9 +4,10 @@
 #
 # author   : harald van der laan
 # date     : 2017/03/15
-# version  : v1.0.0
+# version  : v1.0.1
 #
 # changelog:
+# - v1.0.1    renamed Wired connection N to System ethN
 # - v1.0.0    initial version
 
 - name: setting selinux to targeted and enforcing
@@ -22,6 +23,53 @@
 
 - name: setting dns servers to labipa
   shell: 'nmcli con mod "System eth1" ipv4.dns 172.16.20.2 +ipv4.dns 8.8.8.8 ipv6.dns fd00:cafe::2'
+
+- name: check exists /etc/sysconfig/network-scripts/ifcfg-eth2
+  stat:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth2
+  register: ifcfg_eth2_stat
+
+- name: check exists /etc/sysconfig/network-scripts/ifcfg-eth3
+  stat:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth3
+  register: ifcfg_eth3_stat
+
+- name: remove private connection Wired connection 2
+  nmcli:
+    type: ethernet
+    conn_name: "Wired connection 2"
+    state: absent
+  when: ifcfg_eth2_stat.stat.exists == false
+
+- name: check exists /etc/sysconfig/network-scripts/ifcfg-eth3
+  stat:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth3
+  register: ifcfg_eth3_stat
+
+- name: remove private connection Wired connection 3
+  nmcli:
+    type: ethernet
+    conn_name: "Wired connection 3"
+    state: absent
+  when: ifcfg_eth3_stat.stat.exists == false
+
+- name: create private connection System eth2
+  nmcli:
+    type: ethernet
+    conn_name: "System eth2"
+    ifname: eth2
+    state: present
+  when: ifcfg_eth2_stat.stat.exists == false
+  ignore_errors: true
+
+- name: create private connection System eth3
+  nmcli:
+    type: ethernet
+    conn_name: "System eth3"
+    ifname: eth3
+    state: present
+  when: ifcfg_eth3_stat.stat.exists == false
+  ignore_errors: true
 
 - name: add PEERDNS=no to System eth0
   lineinfile:
