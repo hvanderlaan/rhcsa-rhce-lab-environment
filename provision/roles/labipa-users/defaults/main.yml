@@ -4,9 +4,10 @@
 #
 # author   : harald van der laan
 # date     : 2017/03/15
-# version  : v1.0.0
+# version  : v1.0.1
 #
 # changelog:
+# - v1.0.1    added extra ipaddresses
 # - v1.0.0    initial version
 
 labipa_users:
@@ -19,3 +20,7 @@ labipa_users:
   - { user: "ldapuser4", first: "ldap", last: "user4" }
   - { user: "ldapuser5", first: "ldap", last: "user5" }
   - { user: "isabelle", first: "isa", last: "belle" }
+
+labipa_ipv4: 172.16.20.2
+system1_ipv4: 172.16.20.10
+system2_ipv4: 172.16.20.20
