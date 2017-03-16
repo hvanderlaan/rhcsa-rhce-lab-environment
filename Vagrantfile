@@ -1,6 +1,17 @@
 # -*- mode: ruby -*-
 # vi: ft=ruby :
 
+# file     : Vagrantfile
+# purpose  : build vagrant rhcsa-rhce-lab-environment
+#
+# author   : harald van der laan
+# date     : 2017/03/16
+# version  : v1.0.1
+#
+# changelog:
+# - v1.0.1    fixed non working System eth1
+# - v1.0.0    initial version
+
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -85,7 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			# provision for system1 and system2
 			node.vm.provision "ansible" do |ansible|
 				ansible.playbook = "provision/system.yml"
-				ansible.host_vars = { "system#{i}" => { "private_ipv4_address" => "1172.16.20.#{i}0", "private_ipv6_address" => "fd00:cafe::#{i}0" }}
+				ansible.host_vars = { "system#{i}" => { "private_ipv4_address" => "172.16.20.#{i}0", "private_ipv6_address" => "fd00:cafe::#{i}0" }}
 			end
 		end
 	end

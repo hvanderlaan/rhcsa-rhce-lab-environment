@@ -19,11 +19,3 @@
     name: firewalld
     enabled: true
     state: started
-
-- name: upate System eth0 with PEERDNS=no
-  lineinfile:
-    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
-    line: "PEERDNS=no"
-  notify:
-    - reload network
-    - restart network
