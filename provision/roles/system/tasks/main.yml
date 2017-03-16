@@ -20,6 +20,9 @@
     enabled: true
     state: started
 
+- name: setting dns servers to labipa
+  shell: 'nmcli con mod "System eth1" ipv4.dns 172.16.20.2 +ipv4.dns 8.8.8.8'
+
 - name: add PEERDNS=no to System eth0
   lineinfile:
     dest: /etc/sysconfig/network-scripts/ifcfg-eth0

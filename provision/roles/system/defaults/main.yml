@@ -1,0 +1,13 @@
+---
+# file     : roles/system/defaults/main.yml
+# purpose  : variables file non common settings for system{1..2}
+#
+# author   : harald van der laan
+# date     : 2017/03/16
+# version  : v1.0.0
+#
+# changelog:
+# - v1.0.0    initial version
+
+labipa_dns4: 172.16.20.2
+labipa_dns6: fd00:cafe::2

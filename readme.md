@@ -11,14 +11,15 @@ if you want to use this study environment you need to install some packages in o
 ```
 
 ## User information
-| user name | password | server  |
-|-----------|----------|---------|
-| user      | ratencot | labipa  |
-| root      | ratencot | labipa  |
-| user      | ratencot | system1 |
-| root      | ratencot | system1 |
-| user      | ratencot | system2 |
-| root      | ratencot | system2 |
+| user name | password | server          |
+|-----------|----------|-----------------|
+| user      | ratencot | labipa          |
+| root      | ratencot | labipa          |
+| admin     | password | freeipa account |
+| user      | ratencot | system1         |
+| root      | ratencot | system1         |
+| user      | ratencot | system2         |
+| root      | ratencot | system2         |
 
 ## Build time
 Build time on a MacBook Air is: `vagrant up  140,16s user 47,86s system 17% cpu 17:31,12 total`
