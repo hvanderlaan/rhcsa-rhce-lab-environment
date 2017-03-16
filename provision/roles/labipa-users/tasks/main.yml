@@ -52,3 +52,12 @@
   file:
     path: /home/ldap
     state: directory
+
+- name: add system1 to example.com zone
+  shell: "ipa dnsrecord-add example.com system1 --a-rec {{ system1_ipv4 }}"
+
+- name: add system2 to example.com zone
+  shell: "ipa dnsrecord-add example.com system2 --a-rec {{ system2_ipv4 }}"
+
+- name: add ipa to example.com zone
+  shell: "ipa dnsrecord-add example.com ipa --a-rec {{ labipa_ipv4 }}"
