@@ -4,9 +4,10 @@
 #
 # author   : harald van der laan
 # date     : 2017/03/15
-# version  : v1.0.0
+# version  : v1.0.1
 #
 # changelog:
+# - v1.0.1    added system1, system2 and ipa to example.com zone
 # - v1.0.0    initial version
 
 - name: installing vsftpd

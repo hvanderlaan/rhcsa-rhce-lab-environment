@@ -4,9 +4,10 @@
 #
 # author   : harald van der laan
 # date     : 2017/03/15
-# version  : v1.0.0
+# version  : v1.0.1
 #
 # changelog:
+# - v1.0.1    added extra ipaddresses
 # - v1.0.0    initial version
 
 labipa_users:
