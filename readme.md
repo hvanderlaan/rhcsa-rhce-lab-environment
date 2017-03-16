@@ -132,7 +132,8 @@ $ ssh 172.16.20.20 -l root
 ## Todo
 - [x] Fix network [issues #1](https://github.com/hvanderlaan/rhcsa-rhce-lab-environment/issues/1) system1 and system2
 - [x] Add RHCSA Objectives
-- [ ] Create custom hosts files for system1 and system2
+- [x] Dns resolving done by labipa server
+- [ ] Create reccors in labipa dns for system1 and system1
 - [ ] Make ansible playbooks idempotent
 - [ ] Add 2 extra interfaces for link aggregation (RHCE7)
 
