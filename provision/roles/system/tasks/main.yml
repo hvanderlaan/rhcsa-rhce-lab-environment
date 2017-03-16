@@ -21,7 +21,7 @@
     state: started
 
 - name: setting dns servers to labipa
-  shell: 'nmcli con mod "System eth1" ipv4.dns 172.16.20.2 +ipv4.dns 8.8.8.8'
+  shell: 'nmcli con mod "System eth1" ipv4.dns 172.16.20.2 +ipv4.dns 8.8.8.8 ipv6.dns fd00:cafe::2'
 
 - name: add PEERDNS=no to System eth0
   lineinfile:
