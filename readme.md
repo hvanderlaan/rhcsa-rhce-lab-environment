@@ -23,7 +23,7 @@ if you want to use this study environment you need to install some packages in o
 ## Build time
 Build time on a MacBook Air is: `vagrant up  140,16s user 47,86s system 17% cpu 17:31,12 total`
 
-This could be faster is you upgrade labipa server before you start. You could give the labipa server 2048MB of memory and 2 cpu's. The current configuration is 1024MB and 1 cpu. This should be sufficient for normal usage.
+This could be faster if you upgrade labipa server before you start. You could give the labipa server 2048MB of memory and 2 cpu's. The current configuration is 1024MB and 1 cpu. This should be sufficient for normal usage.
 
 ## Usage
 ```bash
@@ -67,7 +67,7 @@ $ ssh 172.16.20.20 -l root
 * bash scripting
 
 ## Todo
-- [x] Fix network [issues #1](https://github.com/hvanderlaan/rhcsa-rhce-lab-environment/issues/1) system1 and system2 (no
+- [x] Fix network [issues #1](https://github.com/hvanderlaan/rhcsa-rhce-lab-environment/issues/1) system1 and system2
 - [ ] Create custom hosts files for system1 and system2
 - [ ] Make ansible playbooks idempotent
 - [ ] Add 2 extra interfaces for link aggregation (RHCE7)
