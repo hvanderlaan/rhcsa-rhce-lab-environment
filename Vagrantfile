@@ -53,8 +53,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			node.vm.box = "centos/7"
 			node.vm.hostname = "system#{i}.example.com"
 			node.vm.network "private_network", ip: "172.16.20.#{i}0", auto_config: false
-			node.vm.network "private_network", type: "dhcp", auto_config: false
-			node.vm.network "private_network", type: "dhcp", auto_config: false
+			node.vm.network "private_network", ip: "172.16.20.1#{i}0", auto_config: false
+			node.vm.network "private_network", ip: "172.16.20.2#{i}0", auto_config: false
 
 			# provider settings for system1 and system2
 			node.vm.provider "virtualbox" do |vbox|
